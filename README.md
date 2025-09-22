@@ -3,13 +3,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.3 |
-| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | 1.9.0 |
+| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | 1.11.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuredevops"></a> [azuredevops](#provider\_azuredevops) | 1.9.0 |
+| <a name="provider_azuredevops"></a> [azuredevops](#provider\_azuredevops) | 1.11.2 |
 
 ## Modules
 
@@ -19,8 +19,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azuredevops_variable_group.groups](https://registry.terraform.io/providers/microsoft/azuredevops/1.9.0/docs/resources/variable_group) | resource |
-| [azuredevops_project.main](https://registry.terraform.io/providers/microsoft/azuredevops/1.9.0/docs/data-sources/project) | data source |
+| [azuredevops_variable_group.groups](https://registry.terraform.io/providers/microsoft/azuredevops/1.11.2/docs/resources/variable_group) | resource |
+| [azuredevops_project.main](https://registry.terraform.io/providers/microsoft/azuredevops/1.11.2/docs/data-sources/project) | data source |
 
 ## Inputs
 
