@@ -1,15 +1,45 @@
+# Terraform Module — Azure DevOps Variable Group
+
+Provisions an `azuredevops_variable_group` for storing pipeline variables and secrets in Azure DevOps.
+
+## Usage
+
+```hcl
+module "variable_group" {
+  source = "github.com/Think-Cube/terraform-azuredevops-variable-group?ref=v1.0.0"
+
+  project_id   = "00000000-1111-2222-3333-444444444444"
+  name         = "my-variable-group"
+  description  = "Application configuration variables"
+  allow_access = true
+
+  variables = [
+    {
+      name  = "APP_ENV"
+      value = "production"
+    },
+    {
+      name         = "DB_PASSWORD"
+      secret_value = "super-secret-value"
+      is_secret    = true
+    }
+  ]
+}
+```
+
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.3 |
-| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | 1.13.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
+| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | ~> 1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuredevops"></a> [azuredevops](#provider\_azuredevops) | 1.13.0 |
+| <a name="provider_azuredevops"></a> [azuredevops](#provider\_azuredevops) | ~> 1.0 |
 
 ## Modules
 
@@ -19,20 +49,23 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azuredevops_variable_group.groups](https://registry.terraform.io/providers/microsoft/azuredevops/1.13.0/docs/resources/variable_group) | resource |
-| [azuredevops_project.main](https://registry.terraform.io/providers/microsoft/azuredevops/1.13.0/docs/data-sources/project) | data source |
+| [azuredevops_variable_group.main](https://registry.terraform.io/providers/microsoft/azuredevops/latest/docs/resources/variable_group) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_azuredevops_project"></a> [azuredevops\_project](#input\_azuredevops\_project) | Name of the Azure DevOps project where variable groups will be created. | `string` | n/a | yes |
-| <a name="input_variable_groups"></a> [variable\_groups](#input\_variable\_groups) | Map of variable groups to create. Each group can be of type "Normal" or "Secret".<br/>Example:<br/>variable\_groups = {<br/>  group1 = {<br/>    type        = "Normal"<br/>    name        = "NormalGroup1"<br/>    description = "Example normal variable group"<br/>    allow\_access = true<br/>    variables = [<br/>      { name = "VAR1", secret\_value = "" },<br/>      { name = "VAR2", secret\_value = "" }<br/>    ]<br/>  }<br/>  group2 = {<br/>    type        = "Secret"<br/>    name        = "SecretGroup1"<br/>    description = "Example secret variable group"<br/>    allow\_access = false<br/>    variables = [<br/>      { name = "SECRET1", secret\_value = "value1", is\_secret = true }<br/>    ]<br/>  }<br/>} | <pre>map(object({<br/>    type         = string<br/>    name         = string<br/>    description  = string<br/>    allow_access = bool<br/>    variables = list(object({<br/>      name         = string<br/>      secret_value = string<br/>      is_secret    = optional(bool, false)<br/>    }))<br/>  }))</pre> | n/a | yes |
+| <a name="input_allow_access"></a> [allow\_access](#input\_allow\_access) | Whether to allow access to this variable group from all pipelines in the project. | `bool` | `true` | no |
+| <a name="input_description"></a> [description](#input\_description) | The description of the variable group. | `string` | `""` | no |
+| <a name="input_key_vault"></a> [key\_vault](#input\_key\_vault) | Optional Azure Key Vault configuration to link to this variable group. | <pre>object({<br>    name                = string<br>    service_endpoint_id = string<br>    variables           = list(string)<br>  })</pre> | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | The name of the variable group. | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the Azure DevOps project in which to create the variable group. | `string` | n/a | yes |
+| <a name="input_variables"></a> [variables](#input\_variables) | List of variables to add to the variable group. | <pre>list(object({<br>    name         = string<br>    value        = optional(string)<br>    secret_value = optional(string)<br>    is_secret    = optional(bool, false)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_variable_group_ids"></a> [variable\_group\_ids](#output\_variable\_group\_ids) | IDs of the created Azure DevOps variable groups. |
-| <a name="output_variable_group_names"></a> [variable\_group\_names](#output\_variable\_group\_names) | Names of the created Azure DevOps variable groups. |
-| <a name="output_variable_group_urls"></a> [variable\_group\_urls](#output\_variable\_group\_urls) | Web URLs of the created Azure DevOps variable groups. |
+| <a name="output_id"></a> [id](#output\_id) | The ID of the created variable group. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the created variable group. |
+<!-- END_TF_DOCS -->

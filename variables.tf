@@ -1,43 +1,42 @@
-variable "azuredevops_project" {
-  description = "Name of the Azure DevOps project where variable groups will be created."
+variable "project_id" {
+  description = "The ID of the Azure DevOps project in which to create the variable group."
   type        = string
 }
 
-variable "variable_groups" {
-  description = <<EOT
-Map of variable groups to create. Each group can be of type "Normal" or "Secret".
-Example:
-variable_groups = {
-  group1 = {
-    type        = "Normal"
-    name        = "NormalGroup1"
-    description = "Example normal variable group"
-    allow_access = true
-    variables = [
-      { name = "VAR1", secret_value = "" },
-      { name = "VAR2", secret_value = "" }
-    ]
-  }
-  group2 = {
-    type        = "Secret"
-    name        = "SecretGroup1"
-    description = "Example secret variable group"
-    allow_access = false
-    variables = [
-      { name = "SECRET1", secret_value = "value1", is_secret = true }
-    ]
-  }
+variable "name" {
+  description = "The name of the variable group."
+  type        = string
 }
-EOT
-  type = map(object({
-    type         = string
+
+variable "description" {
+  description = "The description of the variable group."
+  type        = string
+  default     = ""
+}
+
+variable "allow_access" {
+  description = "Whether to allow access to this variable group from all pipelines in the project."
+  type        = bool
+  default     = true
+}
+
+variable "variables" {
+  description = "List of variables to add to the variable group."
+  type = list(object({
     name         = string
-    description  = string
-    allow_access = bool
-    variables = list(object({
-      name         = string
-      secret_value = string
-      is_secret    = optional(bool, false)
-    }))
+    value        = optional(string)
+    secret_value = optional(string)
+    is_secret    = optional(bool, false)
   }))
+  default = []
+}
+
+variable "key_vault" {
+  description = "Optional Azure Key Vault configuration to link to this variable group."
+  type = object({
+    name                = string
+    service_endpoint_id = string
+    variables           = list(string)
+  })
+  default = null
 }
