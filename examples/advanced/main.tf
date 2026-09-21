@@ -1,6 +1,6 @@
 # Variable group linked to Azure Key Vault — secrets are pulled automatically
 module "variable_group_keyvault" {
-  source = "github.com/Think-Cube/terraform-azuredevops-variable-group?ref=v1.0.0"
+  source = "../.."
 
   project_id   = "00000000-1111-2222-3333-444444444444"
   name         = "vg-myapp-keyvault-prod"
@@ -28,7 +28,7 @@ module "variable_group_keyvault" {
 
 # Separate group for non-secret pipeline config
 module "variable_group_config" {
-  source = "github.com/Think-Cube/terraform-azuredevops-variable-group?ref=v1.0.0"
+  source = "../.."
 
   project_id   = "00000000-1111-2222-3333-444444444444"
   name         = "vg-myapp-config-prod"
