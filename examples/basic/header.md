@@ -1,4 +1,3 @@
-<!-- BEGIN_TF_DOCS -->
 # Example: Basic — Azuredevops Variable Group
 
 Provisions an Azure DevOps Variable Group for pipeline configuration and secrets. Minimal example using required inputs only.
@@ -27,17 +26,3 @@ module "variable_group" {
   ]
 }
 ```
-
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
-| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | ~> 1.0 |
-
-## Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_variable_group"></a> [variable\_group](#module\_variable\_group) | ../.. | n/a |
-<!-- END_TF_DOCS -->
